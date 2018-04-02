@@ -1,23 +1,32 @@
 function fillPyCoalConfig(config)
 	
-	
 	config["borax"] = {
 		type="resource-ore",
 		
-		allotment=70,
-		spawns_per_region={min=1, max=1},
-		richness=12000,
-		size={min=10, max=20},
+		-- general spawn params
+		allotment=80, -- how common resource is
+		spawns_per_region={min=1, max=1}, --number of chunks
+		richness=25000,        -- resource_ore has only one richness value - resource-liquid has min/max
+		
+		size={min=20, max=30}, -- rough radius of area, too high value can produce square shaped areas
 		min_amount=500,
+		
+		-- resource provided at starting location
+		-- probability: 1 = 100% chance to be in starting area
+		--              0 = resource is not in starting area
+		starting={richness=8000, size=25, probability=1},
 	}
 	
 	config["niobium"] = {
 		type="resource-ore",
 		
-		allotment=70,
-		spawns_per_region={min=1, max=1},
-		richness=12000,
-		size={min=10, max=20},
-		min_amount=500,
+		-- general spawn params
+		allotment=80, -- how common resource is
+		spawns_per_region={min=1, max=1}, --number of chunks
+		richness=25000,        -- resource_ore has only one richness value - resource-liquid has min/max
+		
+		size={min=20, max=30}, -- rough radius of area, too high value can produce square shaped areas
+		min_amount=600,
 	}
+	
 end
