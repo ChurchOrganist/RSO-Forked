@@ -39,6 +39,8 @@ require("resourceconfigs.xander")
 require("resourceconfigs.darkstar")
 require("resourceconfigs.dyworld")
 require("resourceconfigs.pyfusion")
+require("resourceconfigs.pycoal")
+require("resourceconfigs.pyhitech")
 require("resourceconfigs.druglab")
 require("resourceconfigs.hydraulicpumpjacks")
 require("resourceconfigs.napus")
@@ -238,6 +240,14 @@ function loadResourceConfig()
 
 	if game.active_mods["pyfusionenergy"] then
 		fillPyFusionConfig(config)
+	end
+
+	if game.active_mods["pyhightech"] then
+		fillPyHighTechConfig(config)
+	end
+	
+	if game.active_mods["pycoalprocessing"] then
+	    fillPyCoalConfig(config)
 	end
 
 	if game.active_mods["druglab"] then
