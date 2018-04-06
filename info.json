@@ -1,12 +1,12 @@
 
 {
-  "name": "rso-mod",
-  "version": "3.5.12",
+  "name": "rso-forked",
+  "version": "0.16.0",
   "factorio_version": "0.16",
-  "title": "Resource Spawner Overhaul",
-  "author": "Dark, orzelek",
-  "contact": "Message me on forums or use discussion board on mod portal",
-  "homepage": "https://forums.factorio.com/viewforum.php?f=79",
-  "description": "Overhauls resource spawning system.",
-  "dependencies": ["? bobenemies", "? bobores", "? 5dim_ores"]
+  "title": "Resource Spawner Overhaul Forked",
+  "author": "Dark, orzelek, ChurchOrganist",
+  "contact": "",
+  "homepage": "",
+  "description": "Fork of Resource Spawner Overhaul using slightly different Vanilla ore config",
+  "dependencies": ["? bobenemies", "? bobores", "? 5dim_ores", "?pycoalprocessing"]
 }
