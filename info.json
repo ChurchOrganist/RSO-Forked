@@ -8,5 +8,5 @@
   "contact": "",
   "homepage": "",
   "description": "Fork of Resource Spawner Overhaul using slightly different Vanilla ore config",
-  "dependencies": ["? bobenemies", "? bobores", "? 5dim_ores", "?pycoalprocessing"]
+  "dependencies": ["? bobenemies", "? bobores", "? 5dim_ores", "?pycoalprocessing", "?pyfusionenergy", "?pyhightech"]
 }
