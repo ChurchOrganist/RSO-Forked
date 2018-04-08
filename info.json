@@ -1,12 +1,12 @@
 
 {
   "name": "rso-forked",
-  "version": "0.16.0",
+  "version": "0.16.1",
   "factorio_version": "0.16",
   "title": "Resource Spawner Overhaul Forked",
   "author": "Dark, orzelek, ChurchOrganist",
-  "contact": "",
-  "homepage": "",
+  "contact": "jmcowgill@gmail.com",
+  "homepage": "https://github.com/ChurchOrganist/RSO-Forked/",
   "description": "Fork of Resource Spawner Overhaul using slightly different Vanilla ore config",
   "dependencies": ["? bobenemies", "? bobores", "? 5dim_ores", "?pycoalprocessing", "?pyfusionenergy", "?pyhightech"]
 }
