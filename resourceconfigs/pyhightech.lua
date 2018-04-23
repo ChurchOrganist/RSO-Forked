@@ -20,7 +20,7 @@ function fillPyHighTechConfig(config)
 		size={min=2, max=5},
 		useOreScaling = true,
 		
-		starting={richness=75000, size=2, probability=1}
+		starting={richness=75000, size=2, probability=0}
 	}
 	
 	config["rare-earth-bolide"] = {
@@ -32,6 +32,6 @@ function fillPyHighTechConfig(config)
 		size={min=2, max=5},
 		useOreScaling = true,
 
-		starting={richness=85000, size=2, probability=1}
+		starting={richness=85000, size=2, probability=0}
 }
 end
