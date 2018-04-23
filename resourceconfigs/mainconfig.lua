@@ -48,6 +48,9 @@ require("resourceconfigs.clownsores")
 require("resourceconfigs.liquidscience")
 require("resourceconfigs.pycoal")
 require("resourceconfigs.pyhightech")
+require("resourceconfigs.cncssulfur")
+require("resourceconfigs.dp77sulfur")
+require("resourceconfigs.allminable")
 -- require("resourceconfigs.yaiom")
 
 function loadResourceConfig()
@@ -229,7 +232,7 @@ function loadResourceConfig()
 		fillXanderConfig(config)
 	end
 
-	if game.active_mods["Darkstar_utilities"] then
+	if game.active_mods["Darkstar_utilities"] or game.active_mods["Darkstar_utilities_Low_Spec"] then
 		fillDarkstarConfig(config)
 	end
 
@@ -271,6 +274,18 @@ function loadResourceConfig()
 
 	if game.active_mods["pyhightech"] then
 		fillPyHighTechConfig(config)
+	end
+
+	if game.active_mods["cncs_Sulfur_Mod"] then
+		fillCncsSulfurConfig(config)
+	end
+
+	if game.active_mods["Dp77s-Sulfur-Mod"] then
+		fillDp77SulfurConfig(config)
+	end
+	
+	if game.active_mods["AllMinable"] then
+		fillAllMinableConfig(config)
 	end
 
 	if game.active_mods["yaiom"] then
