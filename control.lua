@@ -818,7 +818,7 @@ local function spawn_resource_liquid(surface, rname, pos, size, richness, starti
 	if startingArea then
 		richnessMultiplier = settings.global["rso-starting-richness-mult"].value
 	end
-	
+
 	while total_share < 1 do
 		local new_share = vary_by_percentage(avg_share, 0.25, rng)
 		if new_share + total_share > 1 then
@@ -1039,33 +1039,33 @@ local function spawn_starting_resources( surface, index )
 	if global.starting_area_size < 0.1 then return end -- skip spawning if starting area is to small
 	
 	local position = global.startingAreas[index]
-	local configIndexed = global.configIndexed
+	local config = global.config
 	
 	local rng = rng_for_reg_pos( position )
 	local status = true
-	for _,v in pairs(configIndexed) do
-		if v.starting then 
+	for resName,resConfig in pairs(config) do
+		if resConfig.starting and resConfig.valid then 
 			local prob = rng() -- probability that this resource is spawned
 			debug("starting resource probability rolled "..prob)
-			if v.starting.probability > 0 and prob <= v.starting.probability then
+			if resConfig.starting.probability > 0 and prob <= resConfig.starting.probability then
 				local total = 0
 				local radius = 20
 				local min_threshold = 0
 				
-				if v.type == "resource-ore" then
-					min_threshold = v.starting.richness * rng(5, 10) -- lets make sure that there is at least 5-10 times starting richness ore at start
-				elseif v.type == "resource-liquid" then
-					min_threshold = v.starting.richness * 0.5 * v.starting.size
+				if resConfig.type == "resource-ore" then
+					min_threshold = resConfig.starting.richness * rng(5, 10) -- lets make sure that there is at least 5-10 times starting richness ore at start
+				elseif resConfig.type == "resource-liquid" then
+					min_threshold = resConfig.starting.richness * 0.5 * resConfig.starting.size
 				end
 				
 				while (radius < 200) and (total < min_threshold) do
 					local angle = rng() * pi * 2
 					local dist = rng(20) + radius * 2
 					local pos = { x = floor(cos(angle) * dist) + position.x, y = floor(sin(angle) * dist) + position.y }
-					if v.type == "resource-ore" then
-						total = total + spawn_resource_ore(surface, v.name, pos, v.starting.size, v.starting.richness, true, null, rng)
-					elseif v.type == "resource-liquid" then
-						total = total + spawn_resource_liquid(surface, v.name, pos, v.starting.size, v.starting.richness, true, null, rng)
+					if resConfig.type == "resource-ore" then
+						total = total + spawn_resource_ore(surface, resName, pos, resConfig.starting.size, resConfig.starting.richness, true, null, rng)
+					elseif resConfig.type == "resource-liquid" then
+						total = total + spawn_resource_liquid(surface, resName, pos, resConfig.starting.size, resConfig.starting.richness, true, null, rng)
 					end
 					radius = radius + 20
 				end
@@ -1102,17 +1102,15 @@ local function build_config_data(surface)
 	-- build additional indexed array to the associative array
 	for res_name, resConf in pairs(config) do
 		if resConf.valid then -- only add valid resources
-			local res_conf = table.deepcopy(resConf)
-			res_conf.name = res_name
-			
+		
 			local settingsForResource = nil
-			local isEntity = (res_conf.type == "entity")
+			local isEntity = (resConf.type == "entity")
 			local addResource = true
 			
 			local autoplaceName = res_name
 			
-			if res_conf.autoplace_name then
-				autoplaceName = res_conf.autoplace_name
+			if resConf.autoplace_name then
+				autoplaceName = resConf.autoplace_name
 			end
 			
 			if autoPlaceSettings then
@@ -1126,7 +1124,7 @@ local function build_config_data(surface)
 					allotmentMod = entityFrequencyMultiplier[settingsForResource.frequency]
 					sizeMod = entitySizeMultiplier[settingsForResource.size]
 				else
-					allotmentMod =frequencyAllotmentMultiplier[settingsForResource.frequency]
+					allotmentMod = frequencyAllotmentMultiplier[settingsForResource.frequency]
 					sizeMod = sizeMultiplier[settingsForResource.size]
 				end
 				
@@ -1134,10 +1132,10 @@ local function build_config_data(surface)
 				
 				if allotmentMod then
 					if isEntity then
-						res_conf.absolute_probability = res_conf.absolute_probability * allotmentMod
-						debug("Entity chance modified to "..res_conf.absolute_probability)
+						resConf.absolute_probability = resConf.absolute_probability * allotmentMod
+						debug("Entity chance modified to "..resConf.absolute_probability)
 					else
-						res_conf.allotment = round( res_conf.allotment * allotmentMod )
+						resConf.allotment = round( resConf.allotment * allotmentMod )
 					end
 				else
 					log("Null allotment mod for "..res_name.." value "..settingsForResource.frequency)
@@ -1149,43 +1147,48 @@ local function build_config_data(surface)
 				end
 
 				if sizeMod then
-					modifyMinMax(res_conf.size, sizeMod)
+					modifyMinMax(resConf.size, sizeMod)
 					
-					if res_conf.starting then
-						res_conf.starting.size = round( res_conf.starting.size * sizeMod )
+					if resConf.starting then
+						resConf.starting.size = round( resConf.starting.size * sizeMod )
 					end
 					
 					if isEntity then 
-						if res_conf.sub_spawn_size then
-							modifyMinMax(res_conf.sub_spawn_size, sizeMod)
+						if resConf.sub_spawn_size then
+							modifyMinMax(resConf.sub_spawn_size, sizeMod)
 						end
-						modifyMinMax(res_conf.spawns_per_region, sizeMod)
+						modifyMinMax(resConf.spawns_per_region, sizeMod)
 					end
 				end
-				
+
 				if richnessMod then
-					if type == "resource-ore" then
-						res_conf.richness = round( res_conf.richness * richnessMod )
-					elseif type == "resource-liquid" then
-						modifyMinMax(res_conf.richness, richnessMod)
+					if resConf.type == "resource-ore" then
+						resConf.richness = round( resConf.richness * richnessMod )
+					elseif resConf.type == "resource-liquid" then
+						modifyMinMax(resConf.richness, richnessMod)
 					end
 					
-					if res_conf.starting then
-						res_conf.starting.richness = round( res_conf.starting.richness * richnessMod )
+					if resConf.starting then
+						resConf.starting.richness = round( resConf.starting.richness * richnessMod )
 					end
 				else
 					log("Null richness mod for "..res_name.." value "..settingsForResource.richness)
 				end
+				
 				if allotmentMod and richnessMod and sizeMod then
 					debug(res_name .. " allotment mod " .. allotmentMod .. " size mod " .. sizeMod .. " richness mod " .. richnessMod )
 				end
 			end
 			
-			if not settings.global["rso-oil-in-start-area"].value and res_conf.name == "crude-oil" then
-				res_conf.starting = nil
+			if not settings.global["rso-oil-in-start-area"].value and res_name == "crude-oil" then
+				resConf.starting = nil
 			end
 			
 			if addResource then
+				-- this should be a limited table most likely not full config copy
+				local res_conf = table.deepcopy(resConf)
+				res_conf.name = res_name
+				
 				if res_conf.multi_resource and settings.global["rso-multi-resource-active"].value then
 					local new_list = {}
 					for sub_res_name, allotment in pairs(res_conf.multi_resource) do
@@ -1250,13 +1253,12 @@ local function checkConfigForInvalidResources()
 		if prototypes[resourceName] or resourceConfig.type == "entity" then
 			resourceConfig.valid = true
 		else
-			if prototypes[resourceName] and prototypes[resourceName].autoplace ~= nil then
-				-- resource was in config, but it doesn't exist in game files anymore - mark it invalid
-				resourceConfig.valid = false
-				
-				table.insert(invalidResources, "Resource not available: " .. resourceName)
-				debug("Resource not available: " .. resourceName)
-			end
+			-- resource was in config, but it doesn't exist in game files anymore - mark it invalid
+			resourceConfig.valid = false
+			
+			--table.insert(invalidResources, "Resource not available: " .. resourceName)
+			debug("Resource not available: " .. resourceName)
+			log("Resource not available: " .. resourceName)
 		end
 		
 		if resourceConfig.valid and resourceConfig.type ~= "entity" then
@@ -1687,6 +1689,12 @@ local function printInvalidResources(player)
 	end
 end
 
+local function loadAndPrepareConfig()
+	global.config = loadResourceConfig()
+	checkConfigForInvalidResources()
+	build_config_data(global.mainSurface)
+end
+
 local function updateConfig()
 	
 	if global.mainSurface == nil then
@@ -1710,10 +1718,8 @@ local function updateConfig()
 	
 	global.seed = surface.map_gen_settings.seed
 
-	global.config = loadResourceConfig()
-	checkConfigForInvalidResources()
-	build_config_data(surface)
-
+	loadAndPrepareConfig()
+	
 	checkForBobEnemies()
 	calculate_spawner_ratio()
 	
@@ -1902,7 +1908,7 @@ remote.add_interface("RSO", {
 	end,
 	
 	regenConfig = function()
-		build_config_data(global.mainSurface)
+		loadAndPrepareConfig()
 	end,
 	
 	disableChunkHandler = function()
