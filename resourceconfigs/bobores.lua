@@ -6,193 +6,219 @@ function fillBoboresConfig(config)
 	config["stone"].starting.richness = 8000
 	config["stone"].richness = 13000
 	
-	config["gold-ore"] = {
-		type="resource-ore",
-		
-		allotment=60,
-		spawns_per_region={min=1, max=1},
-		richness=8000,
-		size={min=10, max=20},
-		min_amount = 400,
-		
-		multi_resource_chance=0.20,
-		multi_resource={
-			["lead-ore"] = 3,
-			["silver-ore"] = 3,
-			["tin-ore"] = 3,
-			["tungsten-ore"] = 3,
-			["zinc-ore"] = 3,
-			["bauxite-ore"] = 3,
-		}
-	}
-	config["silver-ore"] = {
-		type="resource-ore",
-		
-		allotment=40,
-		spawns_per_region={min=1, max=1},
-		richness=12000,
-		size={min=10, max=20},
-		min_amount = 500,
-		
-		multi_resource_chance=0.20,
-		multi_resource={
-			["lead-ore"] = 3,
-			["gold-ore"] = 3,
-			["tin-ore"] = 3,
-			["tungsten-ore"] = 3,
-			["zinc-ore"] = 3,
-			["bauxite-ore"] = 3,
-		}
-	}
+	local function checkOre(name)
+		local data = game.entity_prototypes[name]
+		if data and data.autoplace_specification then
+			return true
+		end
+		return false
+	end
 	
-	config["lead-ore"] = {
-		type="resource-ore",
-		
-		allotment=40,
-		spawns_per_region={min=1, max=1},
-		richness=12000,
-		size={min=10, max=20},
-		min_amount = 500,
-		
-		starting={richness=4000, size=10, probability=1},
-		
-		multi_resource_chance=0.20,
-		multi_resource={
-			["silver-ore"] = 3,
-			["gold-ore"] = 3,
-			["tin-ore"] = 3,
-			["tungsten-ore"] = 3,
-			["zinc-ore"] = 3,
-			["bauxite-ore"] = 3,
+	if checkOre("gold-ore") then
+		config["gold-ore"] = {
+			type="resource-ore",
+			
+			allotment=60,
+			spawns_per_region={min=1, max=1},
+			richness=8000,
+			size={min=10, max=20},
+			min_amount = 400,
+			
+			multi_resource_chance=0.20,
+			multi_resource={
+				["lead-ore"] = 3,
+				["silver-ore"] = 3,
+				["tin-ore"] = 3,
+				["tungsten-ore"] = 3,
+				["zinc-ore"] = 3,
+				["bauxite-ore"] = 3,
+			}
 		}
-	}
+	end
 	
-	config["tin-ore"] = {
-		type="resource-ore",
-		
-		allotment=80,
-		spawns_per_region={min=1, max=1},
-		richness=12000,
-		size={min=10, max=20},
-		min_amount = 500,
-		
-		starting={richness=5000, size=10, probability=1},
-		
-		multi_resource_chance=0.20,
-		multi_resource={
-			["lead-ore"] = 3,
-			["silver-ore"] = 3,
-			["gold-ore"] = 3,
-			["tungsten-ore"] = 3,
-			["zinc-ore"] = 3,
-			["copper-ore"] = 2,
-			["bauxite-ore"] = 3,
+	if checkOre("silver-ore") then
+		config["silver-ore"] = {
+			type="resource-ore",
+			
+			allotment=40,
+			spawns_per_region={min=1, max=1},
+			richness=12000,
+			size={min=10, max=20},
+			min_amount = 500,
+			
+			multi_resource_chance=0.20,
+			multi_resource={
+				["lead-ore"] = 3,
+				["gold-ore"] = 3,
+				["tin-ore"] = 3,
+				["tungsten-ore"] = 3,
+				["zinc-ore"] = 3,
+				["bauxite-ore"] = 3,
+			}
 		}
-	}
-	
-	config["tungsten-ore"] = {
-		type="resource-ore",
+	end
 		
-		allotment=60,
-		spawns_per_region={min=1, max=1},
-		richness=6000,
-		size={min=10, max=20},
-		min_amount = 300,
-		
-		multi_resource_chance=0.20,
-		multi_resource={
-			["lead-ore"] = 3,
-			["silver-ore"] = 3,
-			["gold-ore"] = 3,
-			["tin-ore"] = 3,
-			["zinc-ore"] = 3,
-			["bauxite-ore"] = 3,
-			["rutile-ore"] = 3,
+	if checkOre("lead-ore") then
+		config["lead-ore"] = {
+			type="resource-ore",
+			
+			allotment=40,
+			spawns_per_region={min=1, max=1},
+			richness=12000,
+			size={min=10, max=20},
+			min_amount = 500,
+			
+			starting={richness=4000, size=10, probability=1},
+			
+			multi_resource_chance=0.20,
+			multi_resource={
+				["silver-ore"] = 3,
+				["gold-ore"] = 3,
+				["tin-ore"] = 3,
+				["tungsten-ore"] = 3,
+				["zinc-ore"] = 3,
+				["bauxite-ore"] = 3,
+			}
 		}
-	}
-	
-	config["zinc-ore"] = {
-		type="resource-ore",
+	end
 		
-		allotment=60,
-		spawns_per_region={min=1, max=1},
-		richness=8000,
-		size={min=10, max=20},
-		min_amount = 400,
+	if checkOre("tin-ore") then
+		config["tin-ore"] = {
+			type="resource-ore",
+			
+			allotment=80,
+			spawns_per_region={min=1, max=1},
+			richness=12000,
+			size={min=10, max=20},
+			min_amount = 500,
+			
+			starting={richness=5000, size=10, probability=1},
+			
+			multi_resource_chance=0.20,
+			multi_resource={
+				["lead-ore"] = 3,
+				["silver-ore"] = 3,
+				["gold-ore"] = 3,
+				["tungsten-ore"] = 3,
+				["zinc-ore"] = 3,
+				["copper-ore"] = 2,
+				["bauxite-ore"] = 3,
+			}
+		}
+	end
+		
+	if checkOre("tungsten-ore") then
+		config["tungsten-ore"] = {
+			type="resource-ore",
+			
+			allotment=60,
+			spawns_per_region={min=1, max=1},
+			richness=6000,
+			size={min=10, max=20},
+			min_amount = 300,
+			
+			multi_resource_chance=0.20,
+			multi_resource={
+				["lead-ore"] = 3,
+				["silver-ore"] = 3,
+				["gold-ore"] = 3,
+				["tin-ore"] = 3,
+				["zinc-ore"] = 3,
+				["bauxite-ore"] = 3,
+				["rutile-ore"] = 3,
+			}
+		}
+	end	
+		
+	if checkOre("zinc-ore") then
+		config["zinc-ore"] = {
+			type="resource-ore",
+			
+			allotment=60,
+			spawns_per_region={min=1, max=1},
+			richness=8000,
+			size={min=10, max=20},
+			min_amount = 400,
 
-		multi_resource_chance=0.20,
-		multi_resource={
-			["lead-ore"] = 3,
-			["silver-ore"] = 3,
-			["gold-ore"] = 3,
-			["tin-ore"] = 3,
-			["tungsten-ore"] = 3,
-			["bauxite-ore"] = 3,
+			multi_resource_chance=0.20,
+			multi_resource={
+				["lead-ore"] = 3,
+				["silver-ore"] = 3,
+				["gold-ore"] = 3,
+				["tin-ore"] = 3,
+				["tungsten-ore"] = 3,
+				["bauxite-ore"] = 3,
+			}
 		}
-	}
-	
-	config["bauxite-ore"] = {
-		type="resource-ore",
+	end
 		
-		allotment=60,
-		spawns_per_region={min=1, max=1},
-		richness=6000,
-		size={min=10, max=20},
-		min_amount = 300,
-		
-		multi_resource_chance=0.20,
-		multi_resource={
-			["lead-ore"] = 3,
-			["silver-ore"] = 3,
-			["gold-ore"] = 3,
-			["tin-ore"] = 3,
-			["zinc-ore"] = 3,
+	if checkOre("bauxite-ore") then
+		config["bauxite-ore"] = {
+			type="resource-ore",
+			
+			allotment=60,
+			spawns_per_region={min=1, max=1},
+			richness=6000,
+			size={min=10, max=20},
+			min_amount = 300,
+			
+			multi_resource_chance=0.20,
+			multi_resource={
+				["lead-ore"] = 3,
+				["silver-ore"] = 3,
+				["gold-ore"] = 3,
+				["tin-ore"] = 3,
+				["zinc-ore"] = 3,
+			}
 		}
-	}
-	
-	config["rutile-ore"] = {
-		type="resource-ore",
+	end
 		
-		allotment=60,
-		spawns_per_region={min=1, max=1},
-		richness=6000,
-		size={min=10, max=20},
-		min_amount = 300,
-		
-		multi_resource_chance=0.20,
-		multi_resource={
-			["lead-ore"] = 3,
-			["silver-ore"] = 3,
-			["gold-ore"] = 3,
-			["tin-ore"] = 3,
-			["zinc-ore"] = 3,
-			["tungsten-ore"] = 3,
+	if checkOre("rutile-ore") then
+		config["rutile-ore"] = {
+			type="resource-ore",
+			
+			allotment=60,
+			spawns_per_region={min=1, max=1},
+			richness=6000,
+			size={min=10, max=20},
+			min_amount = 300,
+			
+			multi_resource_chance=0.20,
+			multi_resource={
+				["lead-ore"] = 3,
+				["silver-ore"] = 3,
+				["gold-ore"] = 3,
+				["tin-ore"] = 3,
+				["zinc-ore"] = 3,
+				["tungsten-ore"] = 3,
+			}
 		}
-	}
-	
-	config["quartz"] = {
-		type="resource-ore",
+	end
 		
-		allotment=40,
-		spawns_per_region={min=1, max=1},
-		richness=8000,
-		size={min=10, max=20},
-		min_amount = 400,
-		
-		starting={richness=3000, size=15, probability=1},
-		
-		multi_resource_chance=0.20,
-		multi_resource={
-			["lead-ore"] = 3,
-			["silver-ore"] = 3,
-			["gold-ore"] = 3,
-			["tin-ore"] = 3,
-			["zinc-ore"] = 3,
+	if checkOre("quartz") then
+		config["quartz"] = {
+			type="resource-ore",
+			
+			allotment=40,
+			spawns_per_region={min=1, max=1},
+			richness=8000,
+			size={min=10, max=20},
+			min_amount = 400,
+			
+			starting={richness=3000, size=15, probability=1},
+			
+			multi_resource_chance=0.20,
+			multi_resource={
+				["lead-ore"] = 3,
+				["silver-ore"] = 3,
+				["gold-ore"] = 3,
+				["tin-ore"] = 3,
+				["zinc-ore"] = 3,
+			}
 		}
-	}
+	end
 	
-	-- check if Nickel, Cobalt, Sulfur or GemOre is added by bobs ores
-	if game.entity_prototypes["cobalt-ore"] then
+	if checkOre("cobalt-ore") then
 		config["cobalt-ore"] = {
 			type="resource-ore",
 			
@@ -212,7 +238,7 @@ function fillBoboresConfig(config)
 		}
 	end
 	
-	if game.entity_prototypes["nickel-ore"] then
+	if checkOre("nickel-ore") then
 		config["nickel-ore"] = {
 			type="resource-ore",
 			
@@ -233,7 +259,7 @@ function fillBoboresConfig(config)
 		
 	end
 	
-	if game.entity_prototypes["sulfur"] then
+	if checkOre("sulfur") then
 		config["sulfur"] = {
 			type="resource-ore",
 			
@@ -253,7 +279,7 @@ function fillBoboresConfig(config)
 		}
 	end
 	
-	if game.entity_prototypes["gem-ore"] then
+	if checkOre("gem-ore") then
 		config["gem-ore"] = {
 			type="resource-ore",
 			
@@ -273,22 +299,22 @@ function fillBoboresConfig(config)
 		}
 	end
 	
-	if game.entity_prototypes["cobalt-ore"] and game.entity_prototypes["nickel-ore"] then
+	if checkOre("cobalt-ore") and checkOre("nickel-ore") then
 		config["cobalt-ore"].multi_resource["nickel-ore"] = 3
 		config["nickel-ore"].multi_resource["cobalt-ore"] = 3
 	end
 	
-	if game.entity_prototypes["gem-ore"] and game.entity_prototypes["nickel-ore"] then
+	if checkOre("gem-ore") and checkOre("nickel-ore") then
 		config["gem-ore"].multi_resource["nickel-ore"] = 3
 		config["nickel-ore"].multi_resource["gem-ore"] = 3
 	end
 	
-	if game.entity_prototypes["gem-ore"] and game.entity_prototypes["cobalt-ore"] then
+	if checkOre("gem-ore") and checkOre("cobalt-ore") then
 		config["gem-ore"].multi_resource["cobalt-ore"] = 3
 		config["cobalt-ore"].multi_resource["gem-ore"] = 3
 	end
 	
-	if game.entity_prototypes["ground-water"] then
+	if checkOre("ground-water") then
 		config["ground-water"] =
 		{
 			type="resource-liquid",
@@ -300,7 +326,7 @@ function fillBoboresConfig(config)
 		}
 	end
 
-	if game.entity_prototypes["lithia-water"] then
+	if checkOre("lithia-water") then
 		config["lithia-water"] =
 		{
 			type="resource-liquid",
@@ -312,7 +338,7 @@ function fillBoboresConfig(config)
 		}
 	end
 
-	if game.entity_prototypes["thorium-ore"] then
+	if checkOre("thorium-ore") then
 		config["thorium-ore"] = {
 			type="resource-ore",
 			
