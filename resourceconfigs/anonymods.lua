@@ -1,11 +1,21 @@
 function fillAnonyModsConfig(config)
 
 	-- boost vanilla resources to make sure they are still quite frequent
-	config["iron-ore"].allotment = 200
-	config["copper-ore"].allotment = 200
-	config["coal"].allotment = 160
-	config["stone"].allotment = 120
-	config["crude-oil"].allotment = 140
+	if config["iron-ore"] then
+		config["iron-ore"].allotment = 200
+	end
+	if config["copper-ore"] then
+		config["copper-ore"].allotment = 200
+	end
+	if config["coal"] then
+		config["coal"].allotment = 160
+	end
+	if config["stone"] then
+		config["stone"].allotment = 120
+	end
+	if config["crude-oil"] then
+		config["crude-oil"].allotment = 140
+	end
 
 	config["aluminum-ore"] =
 	{

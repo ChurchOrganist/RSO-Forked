@@ -1457,15 +1457,22 @@ local function roll_chunk(surface, c_x, c_y)
 		--end
 		table.sort(resource_list, function(res1, res2) return res1[2] < res2[2] end)
 		
+		local function calculateFactor(distance, exponent)
+			if distance < 1 and exponent < 1 then
+				return distance
+			end
+			return distance^exponent
+		end
+		
 		for _, res_con in pairs(resource_list) do
 			local resource = res_con[1]
 			local deep = res_con[2]
 			local r_config = global.config[resource]
 			if r_config and r_config.valid then
 				local dist = distance({x=0,y=0},{x=r_x,y=r_y})
-				local sizeFactor = dist^size_distance_factor
+				local sizeFactor = calculateFactor(dist, size_distance_factor)
 				if r_config.type=="resource-ore" then
-					local richFactor = dist^richness_distance_factor
+					local richFactor = calculateFactor(dist, richness_distance_factor)
 					debug("Resource "..resource.." distance "..dist.." factors (size, richness) "..sizeFactor..","..richFactor)
 					local size=rng(r_config.size.min, r_config.size.max) * (multi_resource_size_factor^deep) * sizeFactor
 					local richness = r_config.richness * richFactor * (multi_resource_richness_factor^deep)
@@ -1473,13 +1480,23 @@ local function roll_chunk(surface, c_x, c_y)
 					debug("Center @ "..c_center_x..","..c_center_y)
 					c_center_x, c_center_y, restriction = find_intersection(surface, c_center_x, c_center_y)
 					debug("New Center @ "..c_center_x..","..c_center_y)
+
+--					local richness_max = 20000
+--					local size_max = 30
+--					if (richness_max > 0 and richness > richness_max) then
+--						richness = math.min(richness, richness_max)
+--					end
+--					if (size_max > 0 and size > size_max) then
+--						size = math.min(size, size_max)
+--					end
+					
 					spawn_resource_ore(surface, resource, {x=c_center_x,y=c_center_y}, size, richness, false, restriction, rng)
 				elseif r_config.type=="resource-liquid" then
 					local richFactor = 0;
 					if r_config.useOreScaling then
-						richFactor = dist^richness_distance_factor
+						richFactor = calculateFactor(dist, richness_distance_factor)
 					else
-						richFactor = dist^fluid_richness_distance_factor
+						richFactor = calculateFactor(dist, fluid_richness_distance_factor)
 					end
 					debug("Resource "..resource.." distance "..dist.." factors (size, richness) "..sizeFactor..","..richFactor)
 					local size=rng(r_config.size.min, r_config.size.max)  * (multi_resource_size_factor^deep) * sizeFactor

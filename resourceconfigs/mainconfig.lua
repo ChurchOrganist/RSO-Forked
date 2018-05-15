@@ -91,7 +91,7 @@ function loadResourceConfig()
 	end
 
 	-- BobOres
-	if game.active_mods["bobores"] and game.entity_prototypes["rutile-ore"] then
+	if game.active_mods["bobores"] then
 		fillBoboresConfig(config)
 	elseif game.active_mods["5dim_ores"] then
 		fill5dimConfig(config)
