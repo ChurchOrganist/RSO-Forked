@@ -1,4 +1,4 @@
-Resource Spawner Overhaul Forked 0.16.0
+Resource Spawner Overhaul Forked 0.16.3
 
 This is basically a clone of Dark/orzelek's mod Resource Spawner Overhaul
 
